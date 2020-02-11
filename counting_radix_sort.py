@@ -24,8 +24,7 @@ def counting_sort(ar, k):
         ar_2[c[j]-1] = j
         c[j] = c[j]-1  # to take care of repetition
     return ar_2
-    
-    
+
 
 a = [2, 5, 3, 0, 2, 3, 0, 3]
 print("Original array:", a)

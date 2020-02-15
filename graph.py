@@ -143,6 +143,7 @@ class Vertex:
     
     def __init__(self, key):
         self.id = key
+        self.val = float('inf')
         self.parent = None
         self.color = 'w'
         self.dtime = 0
@@ -266,6 +267,75 @@ dfs(g)
 #   print("for vertex %s ,the finishing time is %s " % (i.id, i.ftime) )
 
 print(top_sort)   
+
+
+#%% Kruskal MST
+
+
+#for v in g.get_vertices():
+ 
+#Prims MST
+
+g = Graph()
+g.add_edge('a','b',4)
+g.add_edge('b','a',4)
+g.add_edge('a','h',8)
+g.add_edge('h','a',8)
+g.add_edge('b','c',8)
+g.add_edge('c','b',8)
+g.add_edge('b','h',11)
+g.add_edge('h','c',11)
+g.add_edge('c','d',7)
+g.add_edge('d','c',7)
+g.add_edge('c','i',2)
+g.add_edge('i','c',2)
+g.add_edge('c','f',4)
+g.add_edge('f','c',4)
+g.add_edge('d','e',9)
+g.add_edge('e','d',9)
+g.add_edge('d','f',14)
+g.add_edge('f','d',14)
+g.add_edge('e','f',10)
+g.add_edge('f','e',10)
+g.add_edge('f','g',2)
+g.add_edge('g','f',2)
+g.add_edge('g','i',6)
+g.add_edge('i','g',6)
+g.add_edge('g','h',1)
+g.add_edge('h','g',1)
+
+
+
+import heapq
+
+h = []
+heapq.heapify(h)
+
+root = g.get_vertex('a')
+root.val = 0
+
+for i in g.vertList:
+    #print(i)
+    heapq.heappush(h,i)
+
+#print(h)
+while ( len(h) > 0):
+    u = heapq.heappop(h)
+    u = g.get_vertex(u)
+    for v in u.adj:
+        #print(u.adj[v])
+        #print(v.id)
+        if( v.id in h and v.val > u.adj[v]):
+            v.val = u.adj[v]
+            v.parent = u
+
+
+
+
+
+
+  
+
 
 
 

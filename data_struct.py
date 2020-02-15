@@ -12,9 +12,113 @@ print(l)
 l.pop(0)
 print(l)
 
+#%% Manual List
+class ListNode():
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+        self.prev = None
+
+class List():
+    def __init__(self, root):
+        self.root = root
+        self.size = 1
+    
+    def add_node(self, node):
+        ptr = self.root
+        while( ptr != None):
+            parent = ptr
+            ptr = ptr.next
+        ptr = node
+        ptr.prev = parent
+        parent.next = ptr
+
+    def trav(self):
+        ptr = self.root
+        while(ptr != None):
+            print(ptr.val)
+            ptr= ptr.next
+    
+    def get_node(self, i):
+        ptr = self.root
+        while( ptr!= None):
+            if ptr.val == i:
+                node = ptr
+            ptr = ptr.next
+        return node
+
+li = List(ListNode(1))
+for i in range(2, 10):
+    li.add_node(ListNode(i))
+
+li.trav()
+
+# Find k-last element
+def kth_last(k, li):
+    ptr1 = li.root
+    ptr2 = li.root
+    for i in range(1,k):
+        ptr1 = ptr1.next
+    # Not ptr1 points to kth element
+    
+    while(ptr1.next != None):
+        ptr1 = ptr1.next
+        if ptr1.next != None:
+            ptr2 = ptr2.next
+    
+    print("Ptr 1 is at: ",ptr1.val)
+    print("Ptr 2 is at: ",ptr2.val)
+#kth_last(1, li)
+
+# Find Cycle in Linkedlist
+
+n = li.get_node(5)
+li.add_node(n)
+#li.trav()
+
+def find_cycle(li):
+    ptr1 = li.root
+    ptr2 = li.root
+    
+    while(ptr1.next != None):
+        ptr1 = ptr1.next.next
+        ptr2 = ptr2.next
+        if(ptr1 == ptr2):
+            print("There is a cycle")
+            return
+    print("No Cycle")
+
+def find_cycle_node(li):
+    ptr1 = li.root
+    ptr2 = li.root
+    loop_count = 1
+    
+    while(ptr1.next != None):
+        if loop_count == 1:
+            ptr1 = ptr1.next.next
+            ptr2 = ptr2.next
+            if(ptr1 == ptr2 and loop_count == 1):
+                print("There is a cycle")
+                ptr1 = ptr1.next
+                while(ptr1 != ptr2):
+                    loop_count = loop_count+1 
+                    ptr1 = ptr1.next
+                ptr1 = li.root
+                ptr2 = li.root
+                for i in range(loop_count):
+                    ptr1 = ptr1.next
+        else:
+            if ptr1 == ptr2:
+                print("Cycle at node", ptr1.val)
+                return
+            ptr1 = ptr1.next
+            ptr2 = ptr2.next
+            
+    print("No Cycle")
 
 
-
+find_cycle_node(li)
+    
 
 
 

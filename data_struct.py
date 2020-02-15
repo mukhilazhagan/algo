@@ -155,7 +155,74 @@ class RedBlackTree(BinaryTree):
             x.parent.right = y
         y.left = x
         x.parent = y
+#%% Interval Tree
 
+class IntervalNode:
+    def __init__(self, low, high):
+        self.right = None
+        self.left = None
+        self.parent = None
+        self.low = low
+        self.high = high
+        self.max_val = self.high
+        #self.max_val = max(self.high, self.right.max_val, self.left.max_val)
+    
+    
+class IntervalTree:
+    def __init__(self, node):
+        self.root = node
+        self.count = 0
+    
+    def add_interval(self, node):
+        temp = 0
+    
+    def trav(self, node):
+        
+        if node == None:
+            return
+        else:
+            self.trav(node.left)
+            print("(%s, %s)" %(node.low, node.high) )
+            self.trav(node.right)
+        
+    def check_overlap(self, int1, int2):
+        low1, high1 = int1 # Home node
+        low2, high2 = int2 # query node
+        if low2 > low1 and low2<high1:
+            return True
+        elif high2< high1 and high2> low1:
+            return True
+        else:
+            return False
+        
+        
+    def search(self, low, high):
+        ptr = self.root
+        overlap = self.check_overlap( (self.root.low, self.root.high), (low, high) )
+        if overlap:
+            print("Interval overlaps")
+            return
+        else:
+            print("Interval doesn't overlap")
+            
+        while( ptr != None):
+            
+            if low< ptr.low:
+                ptr = ptr.left
+            else:
+                ptr = ptr.right
+        
+            
+            
+i = IntervalTree(IntervalNode(0,3))
+i.trav(i.root)
+i.search(1,2)
+i.search(1,5)
+i.search(-1,2)
+i.search(6,8)
+i = IntervalTree(IntervalNode(5,8))
+    
+        
 
 #%% Trie Node
 class TrieNode:

@@ -144,6 +144,7 @@ class Vertex:
     def __init__(self, key):
         self.id = key
         self.val = float('inf')
+        self.dist = 0
         self.parent = None
         self.color = 'w'
         self.dtime = 0
@@ -330,8 +331,117 @@ while ( len(h) > 0):
             v.parent = u
 
 
+#%% Bellman Ford
+
+g = Graph()
+g.add_edge('s','t',6)
+g.add_edge('s','y',7)
+g.add_edge('t','x',5)
+g.add_edge('t','y',8)
+g.add_edge('t','z',-4)
+g.add_edge('x','t',-2)
+g.add_edge('y','x',-3)
+g.add_edge('y','z',9)
+g.add_edge('z','x',7)
+g.add_edge('z','s',2)
+
+def initialize(g,root):
+    for v in g.vertList:
+        v = g.get_vertex(v)
+        v.dist = float('inf')
+        v.parent = None
+    root = g.get_vertex(root)
+    root.dist = 0
+
+def relax(u, v):
+    v = g.get_vertex(v)
+    u = g.get_vertex(u)
+    print("The weight between, %s and %s is %s" %(u.id,v.id, u.adj[v]))
+
+    if v.dist > u.dist+ u.adj[v]:
+        v.dist = u.dist+ u.adj[v]
+        v.parent = u
+
+    
+initialize(g,'s')
+for u in g.vertList:
+    u = g.get_vertex(u)
+    for v in u.adj:  # Instead should be every edge in G # Need to change code
+        relax(u.id, v.id)
+
+print("Printing Shortest Paths from s")
+for u in g.vertList:
+    u = g.get_vertex(u)
+    print(u.dist)
 
 
+#%% Djikstra 
+
+g = Graph()
+g.add_edge('s','t',10)
+g.add_edge('s','y',5)
+g.add_edge('t','x',1)
+g.add_edge('t','y',2)
+g.add_edge('x','z',4)
+g.add_edge('y','t',3)
+g.add_edge('y','x',9)
+g.add_edge('y','z',2)
+g.add_edge('z','x',6)
+g.add_edge('z','s',7)
+
+def initialize(g,root):
+    for v in g.vertList:
+        v = g.get_vertex(v)
+        v.dist = float('inf')
+        v.parent = None
+    root = g.get_vertex(root)
+    root.dist = 0
+
+def relax(u, v):
+    v = g.get_vertex(v)
+    u = g.get_vertex(u)
+    #print("The weight between, %s and %s is %s" %(u.id,v.id, u.adj[v]))
+
+    if v.dist > u.dist+ u.adj[v]:
+        v.dist = u.dist+ u.adj[v]
+        v.parent = u       
+
+initialize(g, 's')
+
+h = []
+heapq.heapify(h)
+
+vert_dict ={}
+visited = []
+
+def heap_update():
+    for i in g.vertList:
+        if i in visited:
+            continue
+        else:
+        #print(i)
+            i = g.get_vertex(i)
+            heapq.heappush(h, (i.dist, i.id) )
+
+heap_update()
+
+while len(h)>0:
+    print(h)
+    (u_dist, u_id) = heapq.heappop(h)
+    visited.append(u_id)
+    u = g.get_vertex(u_id)
+    #print(" Now Analyzing element:", u.id)
+    for v in u.adj:
+        #print(" For Element:", v.id)
+        relax(u.id, v.id)
+        #heapq.heappush(h, (v.dist, v.id) )
+    heap_update()
+    
+
+print("\nPrinting Shortest Paths from s")
+for u in g.vertList:
+    u = g.get_vertex(u)
+    print(u.id,":",u.dist)
 
 
   

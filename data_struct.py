@@ -126,7 +126,31 @@ find_cycle_node(li)
 
 
 
+ s = 'a quick brown fox'
+ print("Orignal string: " + s)
+ print("Uppercase: " + s.upper())
+ print("Original String unchanged immutable: ",s)
+ print("Lowercase: " + s.lower())
+ print("strip whitespace: " + s.strip())
+ t = s.split()
+ print("split: ", t)
+
+ t = s.split('u')
+ print("split t: ", t)
+ s_2 = ''.join(t)
+ print("merged string: ", s_2)
  
+ s = 'a,quick,brown,fox'
+ print("Orignal string: " + s)
+ print("modified string: ", s.replace(',',' '))
+
+
+
+
+
+
+
+
 
 
 # %% Deque
